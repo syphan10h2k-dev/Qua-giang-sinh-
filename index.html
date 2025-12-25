@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Bro Món Quà 🎁</title>
+    <style>
+        body { margin: 0; height: 100vh; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; font-family: Arial, sans-serif; overflow: hidden; user-select: none; }
+        
+        /* Màn hình dụ dỗ */
+        #man-hinh-chinh { text-align: center; cursor: pointer; animation: rung-nhe 2s infinite; }
+        .icon-qua { font-size: 80px; display: block; margin-bottom: 10px; }
+        h2 { color: #d63384; margin: 0; padding: 0 10px; font-size: 22px; }
+        p { color: #555; font-size: 14px; }
+        @keyframes rung-nhe { 0% { transform: rotate(0deg); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } 100% { transform: rotate(0deg); } }
+
+        /* Màn hình hù dọa (Jeff The Killer) */
+        #man-hinh-hu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 9999; }
+        #anh-ma { width: 100%; height: 100%; object-fit: cover; }
+    </style>
+</head>
+<body>
+
+    <div id="man-hinh-chinh" onclick="kichHoat()">
+        <span class="icon-qua">🎁</span>
+        <h2>Nhấn để nhận quà Giáng Sinh nha! ❤️</h2>
+        <p>(Đeo tai nghe để nghe lời chúc nhé)</p>
+    </div>
+
+    <div id="man-hinh-hu">
+        <img id="anh-ma" src="https://i.pinimg.com/originals/f3/f5/00/f3f500043868222629b0a149c016cb89.jpg">
+    </div>
+
+    <script>
+        function kichHoat() {
+            // Link nhạc hét online
+            var audio = new Audio('https://www.myinstants.com/media/sounds/scream.mp3');
+            
+            // Hiện ma, ẩn quà
+            document.getElementById('man-hinh-chinh').style.display = 'none';
+            document.getElementById('man-hinh-hu').style.display = 'block';
+
+            // Full màn hình
+            var elem = document.documentElement;
+            if (elem.requestFullscreen) { elem.requestFullscreen(); }
+
+            // Hét và Rung
+            audio.play();
+            if (navigator.vibrate) { navigator.vibrate([500, 200, 500, 1000]); }
+        }
+    </script>
+
+</body>
+</html>
