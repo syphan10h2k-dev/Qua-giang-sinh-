@@ -4,30 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Món quà bí mật 🎁</title>
+
+    <meta property="og:title" content="Gửi Bro món quà Giáng Sinh 🎁">
+    <meta property="og:description" content="Nhấn vào để xem lời chúc bí mật nhé! ❤️">
+    <meta property="og:image" content="https://i.pinimg.com/736x/14/03/ca/1403ca6d2da59f2a9757345df3324d5b.jpg">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+
     <style>
         body { margin: 0; padding: 0; height: 100vh; overflow: hidden; background-color: #ffcccc; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; user-select: none; -webkit-user-select: none; }
         
-        /* Giao diện dụ dỗ */
         #man-hinh-chinh { text-align: center; cursor: pointer; animation: nhip-tim 1.5s infinite; }
         .hop-qua { font-size: 100px; margin-bottom: 20px; display: block; }
         h1 { color: #d63384; margin: 0; font-size: 24px; padding: 0 10px; }
         p { color: #555; font-size: 14px; margin-top: 10px; }
-        
         @keyframes nhip-tim { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* Giao diện hù dọa */
         #man-hinh-hu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 9999; }
         
-        /* Ảnh Jeff + Hiệu ứng chớp nháy */
+        /* Ảnh Jeff - Vẫn giữ nguyên link ông gửi */
         #anh-ma { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            /* Hiệu ứng chớp tắt gây lú */
+            width: 100%; height: 100%; object-fit: cover; 
             animation: chop-nhay 0.08s infinite; 
         }
 
-        /* Tạo hiệu ứng chớp màu âm bản */
         @keyframes chop-nhay {
             0% { filter: invert(0) brightness(1); opacity: 1; }
             50% { filter: invert(1) brightness(1.5); opacity: 0.8; }
@@ -49,29 +49,20 @@
 
     <script>
         function kichHoat() {
-            // Link nhạc hét (Loop vô tận)
             var audio = new Audio('https://www.myinstants.com/media/sounds/scary-scream-01.mp3');
             audio.loop = true; 
             
-            // Chuyển màn hình
             document.getElementById('man-hinh-chinh').style.display = 'none';
             document.getElementById('man-hinh-hu').style.display = 'block';
 
-            // Phóng to full màn hình
             var elem = document.documentElement;
             if (elem.requestFullscreen) { elem.requestFullscreen(); }
             if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
 
-            // Chơi nhạc
-            audio.play().catch(function(error) {
-                console.log("Lỗi phát nhạc: " + error);
-            });
+            audio.play().catch(function(error) { console.log("Lỗi: " + error); });
             
-            // Rung điện thoại liên hồi
             if (navigator.vibrate) { 
-                setInterval(function() {
-                    navigator.vibrate(200);
-                }, 250);
+                setInterval(function() { navigator.vibrate(200); }, 250);
             }
         }
     </script>
