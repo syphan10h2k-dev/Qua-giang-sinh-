@@ -8,8 +8,6 @@
     <meta property="og:title" content="Gửi Bro món quà Giáng Sinh 🎁">
     <meta property="og:description" content="Nhấn vào để xem lời chúc bí mật nhé! ❤️">
     <meta property="og:image" content="https://i.pinimg.com/736x/14/03/ca/1403ca6d2da59f2a9757345df3324d5b.jpg">
-    <meta property="og:image:width" content="600">
-    <meta property="og:image:height" content="600">
 
     <style>
         body { margin: 0; padding: 0; height: 100vh; overflow: hidden; background-color: #ffcccc; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; user-select: none; -webkit-user-select: none; }
@@ -22,7 +20,6 @@
 
         #man-hinh-hu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 9999; }
         
-        /* Ảnh Jeff - Vẫn giữ nguyên link ông gửi */
         #anh-ma { 
             width: 100%; height: 100%; object-fit: cover; 
             animation: chop-nhay 0.08s infinite; 
@@ -39,30 +36,47 @@
 
     <div id="man-hinh-chinh" onclick="kichHoat()">
         <span class="hop-qua">🎁</span>
-        <h1>Nhấn để nhận quà Noel của [TÊN BRO] nha! ❤️</h1>
-        <p>(Nhớ bật max volume để nghe lời chúc)</p>
+        <h1>Nhấn để nhận quà Noel của [skibidi 🤪] nha! ❤️</h1>
+        <p>(⚠️ Lưu ý: Tắt chế độ im lặng & Bật max volume)</p>
     </div>
 
     <div id="man-hinh-hu">
         <img id="anh-ma" src="https://img.wattpad.com/cover/69749391-288-k310262.jpg">
     </div>
 
+    <audio id="am-thanh-het" loop preload="auto">
+        <source src="https://www.myinstants.com/media/sounds/scream_3.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         function kichHoat() {
-            var audio = new Audio('https://www.myinstants.com/media/sounds/scary-scream-01.mp3');
-            audio.loop = true; 
-            
-            document.getElementById('man-hinh-chinh').style.display = 'none';
-            document.getElementById('man-hinh-hu').style.display = 'block';
+            var audio = document.getElementById("am-thanh-het");
+            var manHinhChinh = document.getElementById('man-hinh-chinh');
+            var manHinhHu = document.getElementById('man-hinh-hu');
 
-            var elem = document.documentElement;
-            if (elem.requestFullscreen) { elem.requestFullscreen(); }
-            if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
+            // 1. Thử phát nhạc trước
+            audio.play().then(() => {
+                // Nếu nhạc chạy OK thì mới hiện ma (để đồng bộ)
+                hienMa();
+            }).catch(error => {
+                // Nếu lỗi (do chưa tải kịp), vẫn hiện ma luôn cho nó sợ
+                console.log("Lỗi nhạc: " + error);
+                hienMa();
+            });
 
-            audio.play().catch(function(error) { console.log("Lỗi: " + error); });
-            
-            if (navigator.vibrate) { 
-                setInterval(function() { navigator.vibrate(200); }, 250);
+            function hienMa() {
+                manHinhChinh.style.display = 'none';
+                manHinhHu.style.display = 'block';
+
+                // Full màn hình
+                var elem = document.documentElement;
+                if (elem.requestFullscreen) { elem.requestFullscreen(); }
+                if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
+
+                // Rung
+                if (navigator.vibrate) { 
+                    setInterval(function() { navigator.vibrate(200); }, 250);
+                }
             }
         }
     </script>
