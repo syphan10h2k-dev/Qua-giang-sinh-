@@ -2,53 +2,83 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi Bro Món Quà 🎁</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Món quà bí mật 🎁</title>
     <style>
-        body { margin: 0; height: 100vh; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; font-family: Arial, sans-serif; overflow: hidden; user-select: none; }
+        body { margin: 0; padding: 0; height: 100vh; overflow: hidden; background-color: #ffcccc; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; user-select: none; -webkit-user-select: none; }
         
-        /* Màn hình dụ dỗ */
-        #man-hinh-chinh { text-align: center; cursor: pointer; animation: rung-nhe 2s infinite; }
-        .icon-qua { font-size: 80px; display: block; margin-bottom: 10px; }
-        h2 { color: #d63384; margin: 0; padding: 0 10px; font-size: 22px; }
-        p { color: #555; font-size: 14px; }
-        @keyframes rung-nhe { 0% { transform: rotate(0deg); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } 100% { transform: rotate(0deg); } }
+        /* Giao diện dụ dỗ */
+        #man-hinh-chinh { text-align: center; cursor: pointer; animation: nhip-tim 1.5s infinite; }
+        .hop-qua { font-size: 100px; margin-bottom: 20px; display: block; }
+        h1 { color: #d63384; margin: 0; font-size: 24px; padding: 0 10px; }
+        p { color: #555; font-size: 14px; margin-top: 10px; }
+        
+        @keyframes nhip-tim { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* Màn hình hù dọa (Jeff The Killer) */
-        #man-hinh-hu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 9999; }
-        #anh-ma { width: 100%; height: 100%; object-fit: cover; }
+        /* Giao diện hù dọa */
+        #man-hinh-hu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 9999; }
+        
+        /* Ảnh Jeff + Hiệu ứng chớp nháy */
+        #anh-ma { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            /* Hiệu ứng chớp tắt gây lú */
+            animation: chop-nhay 0.08s infinite; 
+        }
+
+        /* Tạo hiệu ứng chớp màu âm bản */
+        @keyframes chop-nhay {
+            0% { filter: invert(0) brightness(1); opacity: 1; }
+            50% { filter: invert(1) brightness(1.5); opacity: 0.8; }
+            100% { filter: invert(0) brightness(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
     <div id="man-hinh-chinh" onclick="kichHoat()">
-        <span class="icon-qua">🎁</span>
-        <h2>Nhấn để nhận quà Giáng Sinh nha! ❤️</h2>
-        <p>(Đeo tai nghe để nghe lời chúc nhé)</p>
+        <span class="hop-qua">🎁</span>
+        <h1>Nhấn để nhận quà Noel của [TÊN BRO] nha! ❤️</h1>
+        <p>(Nhớ bật max volume để nghe lời chúc)</p>
     </div>
 
     <div id="man-hinh-hu">
-        <img id="anh-ma" src="https://i.pinimg.com/originals/f3/f5/00/f3f500043868222629b0a149c016cb89.jpg">
+        <img id="anh-ma" src="https://files.catbox.moe/978w4t.jpg" onerror="this.src='https://i.imgflip.com/2/1bij.jpg'">
     </div>
 
     <script>
         function kichHoat() {
-            // Link nhạc hét online
-            var audio = new Audio('https://www.myinstants.com/media/sounds/scream.mp3');
+            // Link nhạc hét (Đã chọn loại dài và to hơn)
+            var audio = new Audio('https://www.myinstants.com/media/sounds/scary-scream-01.mp3');
             
-            // Hiện ma, ẩn quà
+            // QUAN TRỌNG: Lệnh này giúp âm thanh lặp lại vô tận
+            audio.loop = true; 
+            
+            // Chuyển màn hình
             document.getElementById('man-hinh-chinh').style.display = 'none';
             document.getElementById('man-hinh-hu').style.display = 'block';
 
-            // Full màn hình
+            // Phóng to full màn hình
             var elem = document.documentElement;
             if (elem.requestFullscreen) { elem.requestFullscreen(); }
+            if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
 
-            // Hét và Rung
-            audio.play();
-            if (navigator.vibrate) { navigator.vibrate([500, 200, 500, 1000]); }
+            // Chơi nhạc
+            audio.play().catch(function(error) {
+                console.log("Lỗi phát nhạc: " + error);
+            });
+            
+            // Rung điện thoại liên hồi
+            if (navigator.vibrate) { 
+                // Rung 200ms, nghỉ 50ms, lặp lại mãi mãi (nhờ setInterval)
+                setInterval(function() {
+                    navigator.vibrate(200);
+                }, 250);
+            }
         }
     </script>
 
 </body>
 </html>
+
