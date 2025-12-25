@@ -10,40 +10,17 @@
     <meta property="og:image" content="https://i.pinimg.com/736x/88/46/7d/88467d3448f43812739460293122db66.jpg">
 
     <style>
-        /* Reset mặc định để tránh lỗi giao diện */
         body { margin: 0; padding: 0; height: 100vh; overflow: hidden; background-color: #f0f0f0; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; user-select: none; -webkit-user-select: none; }
         
-        /* MÀN HÌNH DỤ DỖ (Hiện ngay lập tức) */
-        #man-hinh-chinh { 
-            display: block; /* Đảm bảo luôn hiện */
-            text-align: center; 
-            cursor: pointer; 
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            animation: rung-lac 2s infinite; 
-        }
-        
+        #man-hinh-chinh { text-align: center; cursor: pointer; animation: rung-lac 2s infinite; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
         .icon-skibidi { font-size: 80px; margin-bottom: 20px; }
         h1 { color: #000; margin: 0; font-size: 24px; padding: 0 20px; font-weight: bold; }
         p { color: #666; font-size: 16px; margin-top: 15px; }
-
         @keyframes rung-lac { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
 
-        /* MÀN HÌNH HÙ DỌA (Ẩn đi) */
         #man-hinh-hu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 9999; }
-        
-        #anh-ma { 
-            width: 100%; height: 100%; object-fit: cover; 
-            animation: chop-nhay 0.05s infinite; 
-        }
-
-        @keyframes chop-nhay {
-            0% { filter: invert(0); } 50% { filter: invert(1); } 100% { filter: invert(0); }
-        }
+        #anh-ma { width: 100%; height: 100%; object-fit: cover; animation: chop-nhay 0.05s infinite; }
+        @keyframes chop-nhay { 0% { filter: invert(0); } 50% { filter: invert(1); } 100% { filter: invert(0); } }
     </style>
 </head>
 <body>
@@ -58,13 +35,24 @@
         <img id="anh-ma" src="https://img.wattpad.com/cover/69749391-288-k310262.jpg">
     </div>
 
+    <audio id="audio1" preload="auto" loop>
+        <source src="https://www.myinstants.com/media/sounds/fnaf-scream.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio2" preload="auto" loop>
+        <source src="https://www.myinstants.com/media/sounds/scary-maze-game-scream.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio3" preload="auto" loop>
+        <source src="https://www.myinstants.com/media/sounds/scream_3.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         function kichHoat() {
-            // Link nhạc Scary Maze Game
-            var audio = new Audio('https://www.myinstants.com/media/sounds/scary-maze-game-scream.mp3');
-            audio.loop = true; // Hét liên tục
-            
-            // 1. Hiện ma ngay lập tức (Không chờ nhạc load để tránh màn trắng)
+            // Lấy cả 3 nguồn nhạc
+            var a1 = document.getElementById("audio1");
+            var a2 = document.getElementById("audio2");
+            var a3 = document.getElementById("audio3");
+
+            // 1. Chuyển cảnh NGAY LẬP TỨC
             document.getElementById('man-hinh-chinh').style.display = 'none';
             document.getElementById('man-hinh-hu').style.display = 'block';
 
@@ -73,9 +61,13 @@
             if (elem.requestFullscreen) { elem.requestFullscreen(); }
             if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
 
-            // 3. Phát nhạc và Rung
-            audio.play().catch(function(e) { console.log("Lỗi nhạc: " + e); });
-            
+            // 3. KÍCH HOẠT TẤT CẢ ÂM THANH CÙNG LÚC
+            // (Thằng nào tải xong trước thì hét trước, đảm bảo không bị câm)
+            a1.play().catch(e => console.log(e));
+            a2.play().catch(e => console.log(e));
+            a3.play().catch(e => console.log(e));
+
+            // 4. Rung điện thoại
             if (navigator.vibrate) { 
                 setInterval(function() { navigator.vibrate(200); }, 250);
             }
