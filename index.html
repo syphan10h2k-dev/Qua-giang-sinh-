@@ -44,15 +44,13 @@
     </div>
 
     <div id="man-hinh-hu">
-        <img id="anh-ma" src="https://files.catbox.moe/978w4t.jpg" onerror="this.src='https://i.imgflip.com/2/1bij.jpg'">
+        <img id="anh-ma" src="https://img.wattpad.com/cover/69749391-288-k310262.jpg">
     </div>
 
     <script>
         function kichHoat() {
-            // Link nhạc hét (Đã chọn loại dài và to hơn)
+            // Link nhạc hét (Loop vô tận)
             var audio = new Audio('https://www.myinstants.com/media/sounds/scary-scream-01.mp3');
-            
-            // QUAN TRỌNG: Lệnh này giúp âm thanh lặp lại vô tận
             audio.loop = true; 
             
             // Chuyển màn hình
@@ -71,7 +69,6 @@
             
             // Rung điện thoại liên hồi
             if (navigator.vibrate) { 
-                // Rung 200ms, nghỉ 50ms, lặp lại mãi mãi (nhờ setInterval)
                 setInterval(function() {
                     navigator.vibrate(200);
                 }, 250);
