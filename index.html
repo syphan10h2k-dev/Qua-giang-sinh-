@@ -3,76 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Món quà bí mật 🎁</title>
+    <title>Skibidi Toilet 🚽</title>
 
-    <meta property="og:title" content="Gửi "m" món quà Giáng Sinh 🎁">
-    <meta property="og:description" content="Nhấn vào để xem lời chúc bí mật nhé! ❤️">
-    <meta property="og:image" content="https://i.pinimg.com/736x/14/03/ca/1403ca6d2da59f2a9757345df3324d5b.jpg">
+    <meta property="og:title" content="Món quà từ Skibidi Toilet 🚽">
+    <meta property="og:description" content="Skibidi Dop Dop Yes Yes... Nhấn để xem!">
+    <meta property="og:image" content="https://i.pinimg.com/736x/88/46/7d/88467d3448f43812739460293122db66.jpg">
 
     <style>
-        body { margin: 0; padding: 0; height: 100vh; overflow: hidden; background-color: #ffcccc; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; user-select: none; -webkit-user-select: none; }
-        
-        /* MÀN HÌNH DỤ DỖ */
-        #man-hinh-chinh { text-align: center; cursor: pointer; animation: nhip-tim 1.5s infinite; }
-        .hop-qua { font-size: 100px; margin-bottom: 20px; display: block; }
-        h1 { color: #d63384; margin: 0; font-size: 24px; padding: 0 10px; }
-        p { color: #555; font-size: 14px; margin-top: 10px; }
-        @keyframes nhip-tim { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-
-        /* MÀN HÌNH HÙ DỌA */
-        #man-hinh-hu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 9999; }
-        
-        #anh-ma { 
-            width: 100%; height: 100%; object-fit: cover; 
-            /* Hiệu ứng chớp nháy mạnh */
-            animation: chop-nhay 0.08s infinite; 
-        }
-
-        @keyframes chop-nhay {
-            0% { filter: invert(0) brightness(1); opacity: 1; }
-            50% { filter: invert(1) brightness(1.5); opacity: 0.8; }
-            100% { filter: invert(0) brightness(1); opacity: 1; }
-        }
-    </style>
-</head>
-<body>
-
-    <div id="man-hinh-chinh" onclick="kichHoat()">
-        <span class="hop-qua">🎁</span>
-        <h1>Nhấn để nhận quà Noel của [TÊN BRO] nha! ❤️</h1>
-        <p>(⚠️ Nhớ bật MAX volume để nghe rõ lời chúc)</p>
-    </div>
-
-    <div id="man-hinh-hu">
-        <img id="anh-ma" src="https://img.wattpad.com/cover/69749391-288-k310262.jpg">
-    </div>
-
-    <audio id="am-thanh-het" loop preload="auto">
-        <source src="https://www.myinstants.com/media/sounds/scary-maze-game-scream.mp3" type="audio/mpeg">
-    </audio>
-
-    <script>
-        function kichHoat() {
-            var audio = document.getElementById("am-thanh-het");
-            
-            // 1. Chuyển màn hình ngay lập tức
-            document.getElementById('man-hinh-chinh').style.display = 'none';
-            document.getElementById('man-hinh-hu').style.display = 'block';
-
-            // 2. Full màn hình
-            var elem = document.documentElement;
-            if (elem.requestFullscreen) { elem.requestFullscreen(); }
-            if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
-
-            // 3. Phát nhạc & Rung
-            audio.play().catch(e => console.log("Lỗi: " + e));
-            
-            if (navigator.vibrate) { 
-                setInterval(() => { navigator.vibrate(200); }, 250);
-            }
-        }
-    </script>
-
-</body>
-</html>
-
+        body { margin: 0; padding: 0; height: 100vh; overflow: hidden; background-color: #f0f0f0; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; user-select: none; -webkit
+              
