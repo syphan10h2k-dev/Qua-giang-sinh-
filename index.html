@@ -2,87 +2,54 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lì Xì Tết Ất Tỵ 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lì Xì Uy Tín 2026 🧧</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #a80000; /* Đỏ máu */
+            background-color: #ffeaa7; /* Màu vàng nhẹ */
             font-family: 'Arial', sans-serif;
             overflow: hidden;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
-            text-align: center;
             user-select: none;
+            touch-action: manipulation; /* Chống zoom */
         }
 
-        #game-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
+        /* --- PHẦN GIAO DIỆN GAME --- */
+        #game-ui {
+            text-align: center;
+            transition: opacity 0.2s;
         }
 
-        /* ẢNH BAO LÌ XÌ */
-        #envelope-img {
-            width: 250px;
-            cursor: pointer;
-            transition: transform 0.1s;
-            content: url("https://cdn-icons-png.flaticon.com/512/6454/6454084.png"); 
-            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
-        }
-        
-        #envelope-img:active {
-            transform: scale(0.9) rotate(5deg);
-        }
+        h1 { color: #d63031; font-size: 28px; margin-bottom: 10px; }
+        p { color: #2d3436; font-size: 18px; }
 
-        /* TỜ 500K */
-        #money-500k {
-            position: absolute;
-            top: 20%;
-            left: -100%; 
-            width: 200px;
-            transition: left 0.5s ease-out;
-            z-index: 5;
-            content: url("https://upload.wikimedia.org/wikipedia/vi/1/1d/500000_dong_VN_mat_sau.jpg");
-            transform: rotate(-10deg);
-            border: 2px solid #fff;
-        }
-
-        /* TEXT */
-        .message {
-            font-size: 20px;
-            color: #ffff00;
+        .btn-lixi {
+            background: #ff7675;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 24px;
             font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 10px 0 #d63031;
+            cursor: pointer;
             margin-top: 20px;
-            text-shadow: 2px 2px 0 #000;
-            background: rgba(0,0,0,0.5);
-            padding: 10px;
-            border-radius: 8px;
+            active: transform: translateY(5px);
         }
 
-        /* INPUT */
-        #guess-section {
-            display: none;
-            flex-direction: column;
-            gap: 15px;
-            background: rgba(255,255,255,0.2);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
+        .btn-lixi:active {
+            transform: translateY(5px);
+            box-shadow: 0 5px 0 #d63031;
         }
-        input { padding: 10px; font-size: 18px; text-align: center; border-radius: 5px; border:none;}
-        button { padding: 10px; background: yellow; color: red; font-weight: bold; border: none; border-radius: 5px; cursor: pointer;}
 
-        /* --- PHẦN JUMPSCARE --- */
-        #scare-screen {
+        /* --- PHẦN MÀN HÌNH CHẾT (BRICK) --- */
+        #brick-screen {
             display: none;
             position: fixed;
             top: 0;
@@ -91,143 +58,120 @@
             height: 100vh;
             background-color: black;
             z-index: 9999;
-            overflow: hidden;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        #jeff-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Ảnh Jeff Creepy (Đen trắng ám ảnh) */
-            content: url("https://i.pinimg.com/originals/e8/51/97/e85197793d5f573752e557b6f63a2333.jpg");
-            animation: zoomIn 0.2s infinite alternate; /* Zoom giật giật */
+        /* Ảnh Android chết */
+        #android-dead {
+            width: 150px;
+            /* Ảnh Android No Command (Link ổn định) */
+            content: url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Android_robot_recovering.svg/1024px-Android_robot_recovering.svg.png");
+            filter: grayscale(100%) contrast(1.2);
         }
 
-        /* Hiệu ứng Màn hình nhiễu (Glitch) */
-        .glitch-effect {
-            filter: invert(100%) contrast(200%);
+        .error-text {
+            color: white;
+            font-family: monospace;
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
         }
 
-        @keyframes zoomIn {
-            0% { transform: scale(1) translate(2px, -2px); }
-            100% { transform: scale(1.1) translate(-2px, 2px); }
+        /* Hiệu ứng LAG GIẢ (Rung màn hình) */
+        @keyframes lagShake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
+
+        .lagging {
+            animation: lagShake 0.05s infinite; /* Rung cực nhanh */
+            filter: blur(1px); /* Mờ nhẹ cho giống lag */
+        }
+
     </style>
 </head>
 <body>
 
-    <audio id="scream-sound" preload="auto" loop>
-        <source src="https://www.myinstants.com/media/sounds/screaming-woman-horror.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="game-container">
-        <img id="money-500k" alt="tien">
-        
-        <div id="step-1">
-            <img id="envelope-img" alt="lixi" onclick="handleStep1()">
-            <p class="message" id="msg-text">🧧 Nhấp vào bao để nhận 500k!</p>
-        </div>
-
-        <div id="guess-section">
-            <p class="message">Đoán xem lì xì bao nhiêu?</p>
-            <input type="number" id="user-guess">
-            <button onclick="handleStep2()">Mở Ngay</button>
-        </div>
+    <div id="game-ui">
+        <h1>🧧 LÌ XÌ SIÊU TỐC 🧧</h1>
+        <p>Bạn nhận được một bao lì xì 500k!</p>
+        <p id="counter-text">Nhấp 36 lần để mở khóa: 0/36</p>
+        <button class="btn-lixi" onclick="handleClick()">NHẬN NGAY</button>
     </div>
 
-    <div id="scare-screen">
-        <img id="jeff-img" alt="RUN">
+    <div id="brick-screen">
+        <img id="android-dead" alt="Error">
+        <div class="error-text">
+            No command.<br>
+            <span style="color: #ff5555">Error: System UI not responding.</span><br>
+            <span style="color: #55ff55">Rebooting... Failed.</span>
+        </div>
     </div>
 
     <script>
-        let clickCount = 0;
-        const envelope = document.getElementById('envelope-img');
-        const msgText = document.getElementById('msg-text');
-        const guessSec = document.getElementById('guess-section');
-        const step1 = document.getElementById('step-1');
-        const money = document.getElementById('money-500k');
-        
-        // Jumpscare Elements
-        const scareScreen = document.getElementById('scare-screen');
-        const scream = document.getElementById('scream-sound');
-        const jeff = document.getElementById('jeff-img');
+        let count = 0;
+        const target = 36;
+        const counterText = document.getElementById('counter-text');
+        const gameUI = document.getElementById('game-ui');
+        const brickScreen = document.getElementById('brick-screen');
+        const body = document.body;
 
-        // Bước 1: Bấm vào lì xì -> Ra nhập tiền
-        function handleStep1() {
-            if (clickCount === 0) {
-                step1.style.display = 'none';
-                guessSec.style.display = 'flex';
-                clickCount = 1;
-            } else {
-                // Đây là lúc bấm 5 lần (Bước 3)
-                handleFinalClicks();
+        function handleClick() {
+            count++;
+            counterText.innerText = `Nhấp 36 lần để mở khóa: ${count}/${target}`;
+            
+            // Rung nhẹ mỗi lần bấm (Haptic feedback)
+            if (navigator.vibrate) navigator.vibrate(50);
+
+            // Giai đoạn gần cuối: Đổi màu chữ cho kịch tính
+            if (count > 30) {
+                counterText.style.color = "red";
+                counterText.style.fontWeight = "bold";
+            }
+
+            // --- KÍCH HOẠT BRICK ---
+            if (count >= target) {
+                triggerBrickMode();
             }
         }
 
-        // Bước 2: Nhập tiền xong -> Quay lại bấm lì xì
-        function handleStep2() {
-            const val = document.getElementById('user-guess').value;
-            if(!val) return alert("Nhập tiền vào bro!");
-            
-            guessSec.style.display = 'none';
-            step1.style.display = 'block';
-            
-            // Hiện tờ tiền nhử
-            money.style.left = "50px";
-            
-            msgText.innerHTML = "⚠️ Lỗi mạng! <br> Nhấp LIÊN TỤC 5 lần vào bao để sửa lỗi!";
-            msgText.style.color = "orange";
-            clickCount = 2; // Chuyển sang mode đếm click
-        }
-
-        // Bước 3: Đếm 5 lần bấm
-        function handleFinalClicks() {
-            clickCount++;
-            
-            // Rung lắc nhẹ cảnh báo
-            envelope.style.transform = `rotate(${Math.random()*30 - 15}deg)`;
-            
-            if(clickCount >= 7) { // 2 + 5 = 7
-                triggerHell();
-            }
-        }
-
-        // --- KÍCH HOẠT ĐỊA NGỤC (Jumpscare) ---
-        function triggerHell() {
-            // 1. Full màn hình
+        function triggerBrickMode() {
+            // 1. Bật Fullscreen (Quan trọng để giống thật)
             if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen().catch(()=>{});
+                document.documentElement.requestFullscreen().catch((e) => {});
             }
 
-            // 2. Xóa giao diện game
-            document.getElementById('game-container').style.display = 'none';
-            document.body.style.cursor = 'none';
+            // 2. Ẩn game, hiện màn hình đen
+            gameUI.style.display = 'none';
+            brickScreen.style.display = 'flex'; // Dùng flex để căn giữa
+            
+            // 3. Rung điện thoại cực mạnh (nếu là Android)
+            // Rung 5 giây liên tục
+            if (navigator.vibrate) navigator.vibrate([1000, 100, 1000, 100, 1000, 100, 1000]);
 
-            // 3. Hiện Jeff và Hét
-            scareScreen.style.display = 'flex';
-            scream.volume = 1.0; 
-            scream.play();
+            // 4. Hiệu ứng LAG (Rung màn hình web)
+            // Thêm class rung lắc vào body
+            body.style.backgroundColor = "black";
+            brickScreen.classList.add('lagging');
 
-            // 4. HIỆU ỨNG LAG MÁY (Visual Lag)
-            // Đổi màu nền liên tục + Rung màn hình
-            let lagInterval = setInterval(() => {
-                // Rung vị trí ngẫu nhiên
-                let x = Math.random() * 100 - 50; 
-                let y = Math.random() * 100 - 50;
-                scareScreen.style.transform = `translate(${x}px, ${y}px) scale(1.2)`;
-                
-                // Đảo màu (Strobe light)
-                if (Math.random() > 0.5) {
-                    scareScreen.style.filter = "invert(100%) hue-rotate(90deg)";
-                } else {
-                    scareScreen.style.filter = "none";
-                }
-            }, 30); // 30ms = Cực nhanh
-
-            // 5. Spam cửa sổ (Tùy chọn - Giả lập treo máy)
-            // setTimeout(() => { alert("SYSTEM ERROR: CRITICAL FAILURE!"); }, 2000);
+            // 5. Treo trình duyệt (Giả vờ)
+            // Dùng vòng lặp nhẹ để làm UI phản hồi chậm (tùy chọn, ở đây tôi dùng CSS cho an toàn)
+            
+            // Đổi trỏ chuột thành 'wait' (xoay vòng)
+            body.style.cursor = 'wait';
         }
     </script>
 </body>
-    </html>
+</html>
 
