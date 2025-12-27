@@ -2,78 +2,237 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Skibidi Toilet 🚽</title>
-
-    <meta property="og:title" content="Món quà từ Skibidi Toilet 🚽">
-    <meta property="og:description" content="Skibidi Dop Dop Yes Yes... Nhấn để xem!">
-    <meta property="og:image" content="https://i.pinimg.com/736x/88/46/7d/88467d3448f43812739460293122db66.jpg">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lì Xì May Mắn 2026</title>
     <style>
-        body { margin: 0; padding: 0; height: 100vh; overflow: hidden; background-color: #f0f0f0; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; user-select: none; -webkit-user-select: none; }
-        
-        #man-hinh-chinh { text-align: center; cursor: pointer; animation: rung-lac 2s infinite; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
-        .icon-skibidi { font-size: 80px; margin-bottom: 20px; }
-        h1 { color: #000; margin: 0; font-size: 24px; padding: 0 20px; font-weight: bold; }
-        p { color: #666; font-size: 16px; margin-top: 15px; }
-        @keyframes rung-lac { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #990000; /* Đỏ đậm cho nó tết */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffff00; /* Chữ vàng */
+            text-align: center;
+            user-select: none; /* Chống bôi đen */
+        }
 
-        #man-hinh-hu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 9999; }
-        #anh-ma { width: 100%; height: 100%; object-fit: cover; animation: chop-nhay 0.05s infinite; }
-        @keyframes chop-nhay { 0% { filter: invert(0); } 50% { filter: invert(1); } 100% { filter: invert(0); } }
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ảnh bao lì xì (Link online) */
+        #envelope-img {
+            width: 220px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            /* Ảnh bao lì xì từ Flaticon */
+            content: url("https://cdn-icons-png.flaticon.com/512/6454/6454084.png"); 
+            filter: drop-shadow(0 0 10px rgba(255, 255, 0, 0.5));
+        }
+        
+        #envelope-img:active {
+            transform: scale(0.9);
+        }
+
+        /* Tờ 500k (Link online) */
+        #money-500k {
+            position: absolute;
+            top: 50px;
+            left: -300px; /* Giấu ở bên trái */
+            width: 180px;
+            transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng trượt mượt */
+            z-index: 10;
+            /* Ảnh tờ 500k minh họa */
+            content: url("https://upload.wikimedia.org/wikipedia/vi/1/1d/500000_dong_VN_mat_sau.jpg");
+            transform: rotate(-15deg);
+            border: 2px solid white;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Chữ thông báo */
+        .message {
+            font-size: 22px;
+            margin-top: 25px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0px #000;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        /* Phần nhập tiền */
+        #guess-section {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        input {
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #ffcc00;
+            color: #d80000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #fff;
+        }
+
+        /* Màn hình Jeff (Jumpscare) */
+        #scare-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #jeff-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Phủ kín màn hình */
+            /* Link ảnh Jeff (Wiki) */
+            content: url("https://static.wikia.nocookie.net/villains/images/3/33/Jeff_the_Killer_Scream.jpg");
+        }
     </style>
 </head>
 <body>
 
-    <div id="man-hinh-chinh" onclick="kichHoat()">
-        <div class="icon-skibidi">🚽👨</div>
-        <h1>Nhấn để nhận quà Noel của Skibidi nha!</h1>
-        <p>(🔊 Nhớ bật max volume nhé)</p>
+    <audio id="scream-sound" preload="auto">
+        <source src="https://www.myinstants.com/media/sounds/golden-freddy-scream_1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="game-container">
+        <img id="money-500k" alt="500k">
+
+        <div id="step-1">
+            <img id="envelope-img" alt="Lì xì" onclick="handleEnvelopeClick()">
+            <p class="message" id="msg-text">🧧 Vuốt lên để nhận Lì Xì!</p>
+        </div>
+
+        <div id="guess-section">
+            <p class="message">Bạn đoán bên trong có bao nhiêu?</p>
+            <input type="number" id="user-guess" placeholder="Nhập số tiền...">
+            <button onclick="submitGuess()">Xác Nhận</button>
+        </div>
     </div>
 
-    <div id="man-hinh-hu">
-        <img id="anh-ma" src="https://img.wattpad.com/cover/69749391-288-k310262.jpg">
+    <div id="scare-screen">
+        <img id="jeff-img" alt="RUN!">
     </div>
-
-    <audio id="audio1" preload="auto" loop>
-        <source src="https://www.myinstants.com/media/sounds/fnaf-scream.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="audio2" preload="auto" loop>
-        <source src="https://www.myinstants.com/media/sounds/scary-maze-game-scream.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="audio3" preload="auto" loop>
-        <source src="https://www.myinstants.com/media/sounds/scream_3.mp3" type="audio/mpeg">
-    </audio>
 
     <script>
-        function kichHoat() {
-            // Lấy cả 3 nguồn nhạc
-            var a1 = document.getElementById("audio1");
-            var a2 = document.getElementById("audio2");
-            var a3 = document.getElementById("audio3");
+        let step = 1;
+        let clickCount = 0;
+        const envelope = document.getElementById('envelope-img');
+        const msgText = document.getElementById('msg-text');
+        const guessSection = document.getElementById('guess-section');
+        const money500k = document.getElementById('money-500k');
+        const screamSound = document.getElementById('scream-sound');
+        const scareScreen = document.getElementById('scare-screen');
+        const step1Div = document.getElementById('step-1');
 
-            // 1. Chuyển cảnh NGAY LẬP TỨC
-            document.getElementById('man-hinh-chinh').style.display = 'none';
-            document.getElementById('man-hinh-hu').style.display = 'block';
+        function handleEnvelopeClick() {
+            if (step === 1) {
+                // Giả vờ chuyển sang bước nhập tiền
+                step1Div.style.display = 'none';
+                guessSection.style.display = 'flex';
+                step = 2;
+            } else if (step === 3) {
+                // Đếm số lần bấm
+                clickCount++;
+                
+                // Hiệu ứng rung bần bật
+                envelope.style.transform = `rotate(${Math.random() * 20 - 10}deg) scale(0.9)`;
+                setTimeout(() => envelope.style.transform = 'rotate(0deg) scale(1)', 50);
 
-            // 2. Full màn hình
-            var elem = document.documentElement;
-            if (elem.requestFullscreen) { elem.requestFullscreen(); }
-            if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
+                // Đổi màu chữ cảnh báo dần
+                if(clickCount === 3) msgText.style.color = "orange";
+                if(clickCount === 4) msgText.style.color = "red";
 
-            // 3. KÍCH HOẠT TẤT CẢ ÂM THANH CÙNG LÚC
-            // (Thằng nào tải xong trước thì hét trước, đảm bảo không bị câm)
-            a1.play().catch(e => console.log(e));
-            a2.play().catch(e => console.log(e));
-            a3.play().catch(e => console.log(e));
-
-            // 4. Rung điện thoại
-            if (navigator.vibrate) { 
-                setInterval(function() { navigator.vibrate(200); }, 250);
+                if (clickCount >= 5) {
+                    triggerJumpscare();
+                }
             }
         }
-    </script>
 
+        function submitGuess() {
+            const guess = document.getElementById('user-guess').value;
+            if (!guess) {
+                alert("Đoán đi bro, ngại gì!");
+                return;
+            }
+
+            // Chuyển sang bước bấm 5 lần
+            guessSection.style.display = 'none';
+            step1Div.style.display = 'block';
+            step = 3;
+
+            // Hiện tờ 500k trượt ra từ góc trái
+            money500k.style.left = '20px'; 
+            
+            // Đổi text dụ dỗ
+            msgText.innerHTML = "⚠️ Kẹt tiền rồi! <br> Nhấp mạnh 5 lần vào bao để rút tiền ra!";
+        }
+
+        function triggerJumpscare() {
+            // Vào chế độ toàn màn hình cho sợ (nếu trình duyệt cho phép)
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
+
+            // 1. Tắt hết giao diện game
+            document.getElementById('game-container').style.display = 'none';
+            document.body.style.cursor = 'none'; // Giấu chuột đi
+
+            // 2. Chờ tích tắc cho nạn nhân ngơ ngác
+            setTimeout(() => {
+                scareScreen.style.display = 'flex'; // Hiện Jeff
+                screamSound.volume = 1.0; // Max volume
+                screamSound.play().catch(e => console.log("Cần tương tác để phát nhạc")); 
+                
+                // Rung màn hình cực mạnh
+                let shakeInterval = setInterval(() => {
+                    let x = Math.random() * 40 - 20;
+                    let y = Math.random() * 40 - 20;
+                    scareScreen.style.transform = `translate(${x}px, ${y}px) scale(1.1)`; // Zoom nhẹ cho sợ
+                }, 30);
+            }, 300);
+        }
+    </script>
 </body>
 </html>
 
