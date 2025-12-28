@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lì Xì Uy Tín 2026 🧧</title>
+    <title>System Update</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #ffeaa7; /* Màu vàng nhẹ */
-            font-family: 'Arial', sans-serif;
+            margin: 0; padding: 0;
+            background-color: black;
+            color: red;
+            font-family: 'Courier New', monospace;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -17,70 +17,49 @@
             justify-content: center;
             height: 100vh;
             user-select: none;
-            touch-action: manipulation; /* Chống zoom */
         }
 
-        /* --- PHẦN GIAO DIỆN GAME --- */
-        #game-ui {
-            text-align: center;
-            transition: opacity 0.2s;
+        /* Hình nền Jeff mờ mờ ám ảnh */
+        .bg-jeff {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://i.pinimg.com/originals/e8/51/97/e85197793d5f573752e557b6f63a2333.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3; /* Mờ thôi để còn nhìn thấy chữ */
+            z-index: -1;
         }
 
-        h1 { color: #d63031; font-size: 28px; margin-bottom: 10px; }
-        p { color: #2d3436; font-size: 18px; }
+        h1 { font-size: 30px; text-transform: uppercase; text-shadow: 2px 2px red; text-align: center;}
+        p { font-size: 18px; color: yellow; text-align: center; margin-bottom: 20px;}
 
-        .btn-lixi {
-            background: #ff7675;
+        /* Ô nhập pass */
+        input {
+            padding: 15px;
+            font-size: 20px;
+            background: #220000;
+            border: 2px solid red;
             color: white;
+            text-align: center;
+            width: 80%;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 30px;
+            font-size: 20px;
+            background: red;
+            color: black;
             border: none;
-            padding: 20px 40px;
-            font-size: 24px;
             font-weight: bold;
-            border-radius: 50px;
-            box-shadow: 0 10px 0 #d63031;
             cursor: pointer;
-            margin-top: 20px;
-            active: transform: translateY(5px);
+            border-radius: 5px;
         }
 
-        .btn-lixi:active {
-            transform: translateY(5px);
-            box-shadow: 0 5px 0 #d63031;
-        }
-
-        /* --- PHẦN MÀN HÌNH CHẾT (BRICK) --- */
-        #brick-screen {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: black;
-            z-index: 9999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Ảnh Android chết */
-        #android-dead {
-            width: 150px;
-            /* Ảnh Android No Command (Link ổn định) */
-            content: url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Android_robot_recovering.svg/1024px-Android_robot_recovering.svg.png");
-            filter: grayscale(100%) contrast(1.2);
-        }
-
-        .error-text {
-            color: white;
-            font-family: monospace;
-            margin-top: 20px;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        /* Hiệu ứng LAG GIẢ (Rung màn hình) */
-        @keyframes lagShake {
+        /* Hiệu ứng Rung (Lag giả) */
+        @keyframes shake {
             0% { transform: translate(1px, 1px) rotate(0deg); }
             10% { transform: translate(-1px, -2px) rotate(-1deg); }
             20% { transform: translate(-3px, 0px) rotate(1deg); }
@@ -94,82 +73,94 @@
             100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
 
-        .lagging {
-            animation: lagShake 0.05s infinite; /* Rung cực nhanh */
-            filter: blur(1px); /* Mờ nhẹ cho giống lag */
-        }
+        .lagging { animation: shake 0.05s infinite; } /* Rung cực mạnh */
 
+        /* Màn hình Crash giả */
+        #fake-crash {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
+            align-items: center; justify-content: center; flex-direction: column;
+        }
+        
+        .crash-box {
+            background: white; color: black; padding: 20px; border-radius: 5px; text-align: left; width: 80%;
+        }
     </style>
 </head>
-<body>
+<body onclick="startTroll()">
 
-    <div id="game-ui">
-        <h1>🧧 LÌ XÌ SIÊU TỐC 🧧</h1>
-        <p>Bạn nhận được một bao lì xì 500k!</p>
-        <p id="counter-text">Nhấp 36 lần để mở khóa: 0/36</p>
-        <button class="btn-lixi" onclick="handleClick()">NHẬN NGAY</button>
+    <audio id="scream" src="https://www.myinstants.com/media/sounds/screaming-woman-horror.mp3"></audio>
+
+    <div class="bg-jeff"></div>
+
+    <div id="main-ui">
+        <h1>⚠️ SYSTEM HACKED ⚠️</h1>
+        <p>Máy của bạn đã bị khóa bởi Skibidi!<br>Nhập mật khẩu để giải cứu điện thoại.</p>
+        
+        <input type="text" id="pass-input" placeholder="Nhập mật khẩu...">
+        <button onclick="checkPass()">MỞ KHÓA</button>
     </div>
 
-    <div id="brick-screen">
-        <img id="android-dead" alt="Error">
-        <div class="error-text">
-            No command.<br>
-            <span style="color: #ff5555">Error: System UI not responding.</span><br>
-            <span style="color: #55ff55">Rebooting... Failed.</span>
+    <div id="fake-crash">
+        <div class="bg-jeff" style="opacity: 1;"></div> <div class="crash-box">
+            <h3>System UI isn't responding</h3>
+            <p style="color: black; font-size: 14px; text-align: left;">
+                App Troll has stopped working.<br>
+                <span style="color: gray">Close app</span>
+            </p>
+            <button style="background: transparent; color: #008080; text-align: right; width: 100%; margin: 0;" onclick="window.close()">CLOSE APP</button>
         </div>
     </div>
 
     <script>
-        let count = 0;
-        const target = 36;
-        const counterText = document.getElementById('counter-text');
-        const gameUI = document.getElementById('game-ui');
-        const brickScreen = document.getElementById('brick-screen');
+        let isStarted = false;
         const body = document.body;
+        const inp = document.getElementById('pass-input');
+        const scream = document.getElementById('scream');
 
-        function handleClick() {
-            count++;
-            counterText.innerText = `Nhấp 36 lần để mở khóa: ${count}/${target}`;
+        // Bấm lần đầu để kích hoạt Fullscreen + Rung
+        function startTroll() {
+            if (isStarted) return;
+            isStarted = true;
             
-            // Rung nhẹ mỗi lần bấm (Haptic feedback)
-            if (navigator.vibrate) navigator.vibrate(50);
-
-            // Giai đoạn gần cuối: Đổi màu chữ cho kịch tính
-            if (count > 30) {
-                counterText.style.color = "red";
-                counterText.style.fontWeight = "bold";
+            // Full màn hình
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(()=>{});
             }
 
-            // --- KÍCH HOẠT BRICK ---
-            if (count >= target) {
-                triggerBrickMode();
+            // Bắt đầu rung lắc (Lag giả)
+            body.classList.add('lagging');
+            if(navigator.vibrate) navigator.vibrate(10000); // Rung 10s
+        }
+
+        function checkPass() {
+            const val = inp.value.toLowerCase(); // Chuyển về chữ thường hết
+            
+            if (val === "depzai" || val === "đẹp trai") {
+                // === NHẬP ĐÚNG ===
+                stopLag();
+                // Hiện màn hình Crash giả
+                document.getElementById('main-ui').style.display = 'none';
+                document.getElementById('fake-crash').style.display = 'flex';
+                
+            } else {
+                // === NHẬP SAI ===
+                alert("SAI RỒI! MÀY KHÔNG THOÁT ĐƯỢC ĐÂU!");
+                // Hù thêm phát nữa
+                scream.play();
+                if(navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 500]);
+                
+                // Đổi màu nền nhấp nháy cho sợ
+                body.style.backgroundColor = "red";
+                setTimeout(() => body.style.backgroundColor = "black", 200);
             }
         }
 
-        function triggerBrickMode() {
-            // 1. Bật Fullscreen (Quan trọng để giống thật)
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen().catch((e) => {});
-            }
-
-            // 2. Ẩn game, hiện màn hình đen
-            gameUI.style.display = 'none';
-            brickScreen.style.display = 'flex'; // Dùng flex để căn giữa
-            
-            // 3. Rung điện thoại cực mạnh (nếu là Android)
-            // Rung 5 giây liên tục
-            if (navigator.vibrate) navigator.vibrate([1000, 100, 1000, 100, 1000, 100, 1000]);
-
-            // 4. Hiệu ứng LAG (Rung màn hình web)
-            // Thêm class rung lắc vào body
-            body.style.backgroundColor = "black";
-            brickScreen.classList.add('lagging');
-
-            // 5. Treo trình duyệt (Giả vờ)
-            // Dùng vòng lặp nhẹ để làm UI phản hồi chậm (tùy chọn, ở đây tôi dùng CSS cho an toàn)
-            
-            // Đổi trỏ chuột thành 'wait' (xoay vòng)
-            body.style.cursor = 'wait';
+        function stopLag() {
+            body.classList.remove('lagging');
+            if(navigator.vibrate) navigator.vibrate(0); // Tắt rung
         }
     </script>
 </body>
